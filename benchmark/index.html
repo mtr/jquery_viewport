@@ -2,6 +2,12 @@
 <html>
 <head>
     <title>jquery.viewport benchmark</title>
+    <style>
+    iframe {
+        float: left;
+        margin-right: 1em;
+    }
+    </style>
 </head>
 <body>
 <iframe width="600" height="600"></iframe>
@@ -50,9 +56,25 @@ function done(){
     var result = document.getElementById("result");
     if (results.original == results.optimized) {
         result.innerHTML = Math.round(_bTestResults.original / _bTestResults.optimized * 10) / 10;
+        submitToBrowserScope();
     } else {
         throw "The test is broken";
     }
+}
+
+function submitToBrowserScope() {
+    var _bTestKey = "agt1YS1wcm9maWxlcnINCxIEVGVzdBiH3LMCDA";
+    var _bScript = document.createElement('script');
+    _bScript.src = 'http://www.browserscope.org/user/beacon/' + _bTestKey;
+    _bScript.setAttribute('async', 'true');
+    var scripts = document.getElementsByTagName('script');
+    var lastScript = scripts[scripts.length - 1];
+    lastScript.parentNode.insertBefore(_bScript, lastScript);
+
+    var script = document.createElement("script");
+    script.src = "http://www.browserscope.org/user/tests/table/agt1YS1wcm9maWxlcnINCxIEVGVzdBiH3LMCDA?o=js";
+    script.setAttribute('async', 'true');
+    document.body.appendChild(script);
 }
 </script>
 </body></html>
