@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>jquery.viewport benchmark</title>
+</head>
+<body>
+<iframe width="600" height="600"></iframe>
+<p>Optimized version is <span id="result">?</span>&times; faster.</p>
+<script>
+var _bTestResults = {};
+var results = {};
+
+var frame = frames[0];
+
+setup("original", function(){
+    setup("optimized", done);
+});
+
+
+function setup(name, next) {
+    frame.location.replace(name + ".html");
+    var timerId = setInterval(function(){
+        if (frame.document.readyState == "complete") {
+            clearInterval(timerId);
+            frame.scroll(200, 500);
+            test(name, next);
+        }
+    }, 1000);
+}
+
+function test(name, next) {
+    var images = frame.document.images;
+    var inviewport = frame.$.inviewport;
+    var length = images.length;
+    var visible = 0;
+    var start = Date.now();
+    for (var i=0; i<length; i++) {
+        if (inviewport(images[i], {threshold : 0})) {
+            visible++;
+        }
+    }
+    var end = Date.now();
+    _bTestResults[name] = end - start;
+    results[name] = visible;
+
+    next && next();
+}
+
+function done(){
+    var result = document.getElementById("result");
+    if (results.original == results.optimized) {
+        result.innerHTML = Math.round(_bTestResults.original / _bTestResults.optimized * 10) / 10;
+    } else {
+        throw "The test is broken";
+    }
+}
+</script>
+</body></html>
