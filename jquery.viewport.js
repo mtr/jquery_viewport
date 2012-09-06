@@ -9,27 +9,28 @@
  * Project home:
  *  http://www.appelsiini.net/projects/viewport
  *
+ * Modified to check for entire elements being in the viewport instead any part of element.
  */
 (function($) {
     
     $.belowthefold = function(element, settings) {
         var fold = $(window).height() + $(window).scrollTop();
-        return fold <= $(element).offset().top - settings.threshold;
+        return fold <= $(element).offset().top + $(element).height() - settings.threshold;
     };
 
     $.abovethetop = function(element, settings) {
         var top = $(window).scrollTop();
-        return top >= $(element).offset().top + $(element).height() - settings.threshold;
+        return top >= $(element).offset().top - settings.threshold;
     };
     
     $.rightofscreen = function(element, settings) {
         var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= $(element).offset().left - settings.threshold;
+        return fold <= $(element).offset().left  + $(element).width() - settings.threshold;
     };
     
     $.leftofscreen = function(element, settings) {
         var left = $(window).scrollLeft();
-        return left >= $(element).offset().left + $(element).width() - settings.threshold;
+        return left >= $(element).offset().left - settings.threshold;
     };
     
     $.inviewport = function(element, settings) {
@@ -54,5 +55,4 @@
         }
     });
 
-    
 })(jQuery);
