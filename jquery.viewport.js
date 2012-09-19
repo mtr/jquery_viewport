@@ -38,19 +38,19 @@
     
     $.extend($.expr[':'], {
         "below-the-fold": function(a, i, m) {
-            return $.belowthefold(a, {threshold : 0});
+            return $.belowthefold(a, {threshold : parseInt(m[3]) || 0});
         },
         "above-the-top": function(a, i, m) {
-            return $.abovethetop(a, {threshold : 0});
+            return $.abovethetop(a, {threshold : parseInt(m[3]) || 0});
         },
         "left-of-screen": function(a, i, m) {
-            return $.leftofscreen(a, {threshold : 0});
+            return $.leftofscreen(a, {threshold : parseInt(m[3]) || 0});
         },
         "right-of-screen": function(a, i, m) {
-            return $.rightofscreen(a, {threshold : 0});
+            return $.rightofscreen(a, {threshold : parseInt(m[3]) || 0});
         },
         "in-viewport": function(a, i, m) {
-            return $.inviewport(a, {threshold : 0});
+            return $.inviewport(a, {threshold : parseInt(m[3]) || 0});
         }
     });
 
