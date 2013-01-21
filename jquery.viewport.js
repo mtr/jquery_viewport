@@ -36,6 +36,11 @@
         var $element = $(element);
         var offset = $element.offset();
 
+        // Return false if element is hidden.
+        if (!$element.is(':visible')) {
+            return false;
+        }
+
         var $window = $(window);
         var windowTop = $window.scrollTop();
         var threshold = settings.threshold;
