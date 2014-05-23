@@ -9,51 +9,50 @@
  * Project home:
  *  http://www.appelsiini.net/projects/viewport
  *
- * Modified to check for entire elements being in the viewport instead any part of element.
  */
-(function($) {
+(function ($) {
 
-    $.belowTheFold = function(element, settings) {
+    $.belowTheFold = function (element, settings) {
         var fold = $(window).height() + $(window).scrollTop();
         return fold <= Math.round($(element).offset().top) - settings.threshold;
     };
 
-    $.belowTheFoldCompletely = function(element, settings) {
+    $.belowTheFoldCompletely = function (element, settings) {
         var fold = $(window).height() + $(window).scrollTop();
         return fold <= $(element).offset().top + $(element).height() - settings.threshold;
     };
 
-    $.aboveTheTop = function(element, settings) {
+    $.aboveTheTop = function (element, settings) {
         var top = $(window).scrollTop();
         return top >= Math.round($(element).offset().top) + $(element).height() - settings.threshold;
     };
-    
-    $.aboveTheTopCompletely = function(element, settings) {
+
+    $.aboveTheTopCompletely = function (element, settings) {
         var top = $(window).scrollTop();
         return top >= $(element).offset().top - settings.threshold;
     };
 
-    $.rightOfScreen = function(element, settings) {
+    $.rightOfScreen = function (element, settings) {
         var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= $(element).offset().left  - settings.threshold;
+        return fold <= $(element).offset().left - settings.threshold;
     };
 
-    $.rightOfScreenCompletely = function(element, settings) {
+    $.rightOfScreenCompletely = function (element, settings) {
         var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= $(element).offset().left  + $(element).width() - settings.threshold;
+        return fold <= $(element).offset().left + $(element).width() - settings.threshold;
     };
 
-    $.leftOfScreen = function(element, settings) {
+    $.leftOfScreen = function (element, settings) {
         var left = $(window).scrollLeft();
         return left >= Math.round($(element).offset().left) + $(element).width() - settings.threshold;
     };
 
-    $.leftOfScreenCompletely = function(element, settings) {
+    $.leftOfScreenCompletely = function (element, settings) {
         var left = $(window).scrollLeft();
         return left >= $(element).offset().left - settings.threshold;
     };
 
-    $.inViewport = function(element, settings) {
+    $.inViewport = function (element, settings) {
         var $element = $(element);
         var offset = $element.offset();
 
@@ -100,25 +99,45 @@
     };
 
     $.extend($.expr[':'], {
-        "below-the-fold": function(a, i, m) {
+        "below-the-fold": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.belowTheFold(a, {threshold : parseInt(m[3]) || 0});
+            return $.belowTheFold(a, {threshold: parseInt(m[3]) || 0});
         },
-        "above-the-top": function(a, i, m) {
+        "below-the-fold-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.aboveTheTop(a, {threshold : parseInt(m[3]) || 0});
+            return $.belowTheFoldCompletely(a, {threshold: parseInt(m[3]) || 0});
         },
-        "left-of-screen": function(a, i, m) {
+        "above-the-top": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.leftOfScreen(a, {threshold : parseInt(m[3]) || 0});
+            return $.aboveTheTop(a, {threshold: parseInt(m[3]) || 0});
         },
-        "right-of-screen": function(a, i, m) {
+        "above-the-top-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.rightOfScreen(a, {threshold : parseInt(m[3]) || 0});
+            return $.aboveTheTopCompletely(a, {threshold: parseInt(m[3]) || 0});
         },
-        "in-viewport": function(a, i, m) {
+        "left-of-screen": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.inViewport(a, {threshold : parseInt(m[3]) || 0});
+            return $.leftOfScreen(a, {threshold: parseInt(m[3]) || 0});
+        },
+        "left-of-screen-completely": function (a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
+            return $.leftOfScreenCompletely(a, {threshold: parseInt(m[3]) || 0});
+        },
+        "right-of-screen": function (a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
+            return $.rightOfScreen(a, {threshold: parseInt(m[3]) || 0});
+        },
+        "right-of-screen-completely": function (a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
+            return $.rightOfScreenCompletely(a, {threshold: parseInt(m[3]) || 0});
+        },
+        "in-viewport": function (a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
+            return $.inViewport(a, {threshold: parseInt(m[3]) || 0});
+        },
+        "in-viewport-completely": function (a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
+            return $.inViewportCompletely(a, {threshold: parseInt(m[3]) || 0});
         }
     });
 })(jQuery);
