@@ -75,18 +75,23 @@
 
     $.extend($.expr[':'], {
         "below-the-fold": function(a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
             return $.belowthefold(a, {threshold : parseInt(m[3]) || 0});
         },
         "above-the-top": function(a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
             return $.abovethetop(a, {threshold : parseInt(m[3]) || 0});
         },
         "left-of-screen": function(a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
             return $.leftofscreen(a, {threshold : parseInt(m[3]) || 0});
         },
         "right-of-screen": function(a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
             return $.rightofscreen(a, {threshold : parseInt(m[3]) || 0});
         },
         "in-viewport": function(a, i, m) {
+            // m[3] is supposedly the threshold (@theluk)
             return $.inviewport(a, {threshold : parseInt(m[3]) || 0});
         }
     });
