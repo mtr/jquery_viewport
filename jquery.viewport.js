@@ -9,6 +9,7 @@
  * Project home:
  *  http://www.appelsiini.net/projects/viewport
  *
+ * Modified to check for entire elements being in the viewport instead any part of element.
  */
 (function($) {
 
@@ -17,9 +18,29 @@
         return fold <= Math.round($(element).offset().top) - settings.threshold;
     };
 
+    $.belowTheFoldCompletely = function(element, settings) {
+        var fold = $(window).height() + $(window).scrollTop();
+        return fold <= $(element).offset().top + $(element).height() - settings.threshold;
+    };
+
     $.aboveTheTop = function(element, settings) {
         var top = $(window).scrollTop();
         return top >= Math.round($(element).offset().top) + $(element).height() - settings.threshold;
+    };
+    
+    $.aboveTheTopCompletely = function(element, settings) {
+        var top = $(window).scrollTop();
+        return top >= $(element).offset().top - settings.threshold;
+    };
+
+    $.rightOfScreen = function(element, settings) {
+        var fold = $(window).width() + $(window).scrollLeft();
+        return fold <= $(element).offset().left  - settings.threshold;
+    };
+
+    $.rightOfScreenCompletely = function(element, settings) {
+        var fold = $(window).width() + $(window).scrollLeft();
+        return fold <= $(element).offset().left  + $(element).width() - settings.threshold;
     };
 
     $.leftOfScreen = function(element, settings) {
@@ -27,9 +48,9 @@
         return left >= Math.round($(element).offset().left) + $(element).width() - settings.threshold;
     };
 
-    $.rightOfScreen = function(element, settings) {
-        var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= Math.round($(element).offset().left) - settings.threshold;
+    $.leftOfScreenCompletely = function(element, settings) {
+        var left = $(window).scrollLeft();
+        return left >= $(element).offset().left - settings.threshold;
     };
 
     $.inViewport = function(element, settings) {
