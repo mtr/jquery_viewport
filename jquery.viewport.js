@@ -12,27 +12,27 @@
  */
 (function($) {
 
-    $.belowthefold = function(element, settings) {
+    $.belowTheFold = function(element, settings) {
         var fold = $(window).height() + $(window).scrollTop();
         return fold <= Math.round($(element).offset().top) - settings.threshold;
     };
 
-    $.abovethetop = function(element, settings) {
+    $.aboveTheTop = function(element, settings) {
         var top = $(window).scrollTop();
         return top >= Math.round($(element).offset().top) + $(element).height() - settings.threshold;
     };
 
-    $.rightofscreen = function(element, settings) {
-        var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= Math.round($(element).offset().left) - settings.threshold;
-    };
-
-    $.leftofscreen = function(element, settings) {
+    $.leftOfScreen = function(element, settings) {
         var left = $(window).scrollLeft();
         return left >= Math.round($(element).offset().left) + $(element).width() - settings.threshold;
     };
 
-    $.inviewport = function(element, settings) {
+    $.rightOfScreen = function(element, settings) {
+        var fold = $(window).width() + $(window).scrollLeft();
+        return fold <= Math.round($(element).offset().left) - settings.threshold;
+    };
+
+    $.inViewport = function(element, settings) {
         var $element = $(element);
         var offset = $element.offset();
 
@@ -81,23 +81,23 @@
     $.extend($.expr[':'], {
         "below-the-fold": function(a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.belowthefold(a, {threshold : parseInt(m[3]) || 0});
+            return $.belowTheFold(a, {threshold : parseInt(m[3]) || 0});
         },
         "above-the-top": function(a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.abovethetop(a, {threshold : parseInt(m[3]) || 0});
+            return $.aboveTheTop(a, {threshold : parseInt(m[3]) || 0});
         },
         "left-of-screen": function(a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.leftofscreen(a, {threshold : parseInt(m[3]) || 0});
+            return $.leftOfScreen(a, {threshold : parseInt(m[3]) || 0});
         },
         "right-of-screen": function(a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.rightofscreen(a, {threshold : parseInt(m[3]) || 0});
+            return $.rightOfScreen(a, {threshold : parseInt(m[3]) || 0});
         },
         "in-viewport": function(a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.inviewport(a, {threshold : parseInt(m[3]) || 0});
+            return $.inViewport(a, {threshold : parseInt(m[3]) || 0});
         }
     });
 })(jQuery);
