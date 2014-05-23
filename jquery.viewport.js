@@ -11,133 +11,126 @@
  *
  */
 (function ($) {
+    "use strict";
 
-    $.belowTheFold = function (element, settings) {
-        var fold = $(window).height() + $(window).scrollTop();
-        return fold <= Math.round($(element).offset().top) - settings.threshold;
-    };
+    var belowTheFold = function (element, settings) {
+            var fold = $(window).height() + $(window).scrollTop();
+            return fold <= Math.round($(element).offset().top) - settings.threshold;
+        },
+        belowTheFoldCompletely = function (element, settings) {
+            var fold = $(window).height() + $(window).scrollTop();
+            return fold <= $(element).offset().top + $(element).height() - settings.threshold;
+        },
+        aboveTheTop = function (element, settings) {
+            var top = $(window).scrollTop();
+            return top >= Math.round($(element).offset().top) + $(element).height() - settings.threshold;
+        },
+        aboveTheTopCompletely = function (element, settings) {
+            var top = $(window).scrollTop();
+            return top >= $(element).offset().top - settings.threshold;
+        },
+        rightOfScreen = function (element, settings) {
+            var fold = $(window).width() + $(window).scrollLeft();
+            return fold <= $(element).offset().left - settings.threshold;
+        },
+        rightOfScreenCompletely = function (element, settings) {
+            var fold = $(window).width() + $(window).scrollLeft();
+            return fold <= $(element).offset().left + $(element).width() - settings.threshold;
+        },
+        leftOfScreen = function (element, settings) {
+            var left = $(window).scrollLeft();
+            return left >= Math.round($(element).offset().left) + $(element).width() - settings.threshold;
+        },
+        leftOfScreenCompletely = function (element, settings) {
+            var left = $(window).scrollLeft();
+            return left >= $(element).offset().left - settings.threshold;
+        },
+        inViewport = function (element, settings) {
+            var $element = $(element),
+                offset = $element.offset();
 
-    $.belowTheFoldCompletely = function (element, settings) {
-        var fold = $(window).height() + $(window).scrollTop();
-        return fold <= $(element).offset().top + $(element).height() - settings.threshold;
-    };
-
-    $.aboveTheTop = function (element, settings) {
-        var top = $(window).scrollTop();
-        return top >= Math.round($(element).offset().top) + $(element).height() - settings.threshold;
-    };
-
-    $.aboveTheTopCompletely = function (element, settings) {
-        var top = $(window).scrollTop();
-        return top >= $(element).offset().top - settings.threshold;
-    };
-
-    $.rightOfScreen = function (element, settings) {
-        var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= $(element).offset().left - settings.threshold;
-    };
-
-    $.rightOfScreenCompletely = function (element, settings) {
-        var fold = $(window).width() + $(window).scrollLeft();
-        return fold <= $(element).offset().left + $(element).width() - settings.threshold;
-    };
-
-    $.leftOfScreen = function (element, settings) {
-        var left = $(window).scrollLeft();
-        return left >= Math.round($(element).offset().left) + $(element).width() - settings.threshold;
-    };
-
-    $.leftOfScreenCompletely = function (element, settings) {
-        var left = $(window).scrollLeft();
-        return left >= $(element).offset().left - settings.threshold;
-    };
-
-    $.inViewport = function (element, settings) {
-        var $element = $(element);
-        var offset = $element.offset();
-
-        // Return false if element is hidden.
-        if (!$element.is(':visible')) {
-            return false;
-        }
-
-        var $window = $(window);
-        var windowTop = $window.scrollTop();
-        var threshold = settings.threshold;
-
-        if (offset.top - threshold < windowTop) {
-            if (offset.top + $element.height() + threshold >= windowTop) {
-                // top edge below the window's top
-            } else {
+            // Return false if element is hidden.
+            if (!$element.is(':visible')) {
                 return false;
             }
-        } else {
-            if (offset.top - threshold <= windowTop + $window.height()) {
-                // bottom edge above the window's bottom
-            } else {
-                return false;
-            }
-        }
 
-        var windowLeft = $window.scrollLeft();
+            var $window = $(window),
+                windowTop = $window.scrollTop(),
+                threshold = settings.threshold;
 
-        if (offset.left - threshold < windowLeft) {
-            if (offset.left + $element.width() + threshold >= windowLeft) {
-                // left edge be on the left side of the window's left edge
+            if (offset.top - threshold < windowTop) {
+                if (offset.top + $element.height() + threshold >= windowTop) {
+                    // top edge below the window's top
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                if (offset.top - threshold <= windowTop + $window.height()) {
+                    // bottom edge above the window's bottom
+                } else {
+                    return false;
+                }
             }
-        } else {
-            if (offset.left - threshold <= windowLeft + $window.width()) {
-                // right edge be on the right side of the window's right edge
-            } else {
-                return false;
-            }
-        }
 
-        return true;
-    };
+            var windowLeft = $window.scrollLeft();
+
+            if (offset.left - threshold < windowLeft) {
+                if (offset.left + $element.width() + threshold >= windowLeft) {
+                    // left edge be on the left side of the window's left edge
+                } else {
+                    return false;
+                }
+            } else {
+                if (offset.left - threshold <= windowLeft + $window.width()) {
+                    // right edge be on the right side of the window's right edge
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
+        };
 
     $.extend($.expr[':'], {
         "below-the-fold": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.belowTheFold(a, {threshold: parseInt(m[3]) || 0});
+            return belowTheFold(a, {threshold: parseInt(m[3]) || 0});
         },
         "below-the-fold-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.belowTheFoldCompletely(a, {threshold: parseInt(m[3]) || 0});
+            return belowTheFoldCompletely(a, {threshold: parseInt(m[3]) || 0});
         },
         "above-the-top": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.aboveTheTop(a, {threshold: parseInt(m[3]) || 0});
+            return aboveTheTop(a, {threshold: parseInt(m[3]) || 0});
         },
         "above-the-top-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.aboveTheTopCompletely(a, {threshold: parseInt(m[3]) || 0});
+            return aboveTheTopCompletely(a, {threshold: parseInt(m[3]) || 0});
         },
         "left-of-screen": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.leftOfScreen(a, {threshold: parseInt(m[3]) || 0});
+            return leftOfScreen(a, {threshold: parseInt(m[3]) || 0});
         },
         "left-of-screen-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.leftOfScreenCompletely(a, {threshold: parseInt(m[3]) || 0});
+            return leftOfScreenCompletely(a, {threshold: parseInt(m[3]) || 0});
         },
         "right-of-screen": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.rightOfScreen(a, {threshold: parseInt(m[3]) || 0});
+            return rightOfScreen(a, {threshold: parseInt(m[3]) || 0});
         },
         "right-of-screen-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.rightOfScreenCompletely(a, {threshold: parseInt(m[3]) || 0});
+            return rightOfScreenCompletely(a, {threshold: parseInt(m[3]) || 0});
         },
         "in-viewport": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.inViewport(a, {threshold: parseInt(m[3]) || 0});
+            return inViewport(a, {threshold: parseInt(m[3]) || 0});
         },
         "in-viewport-completely": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
-            return $.inViewportCompletely(a, {threshold: parseInt(m[3]) || 0});
+            return inViewportCompletely(a, {threshold: parseInt(m[3]) || 0});
         }
     });
 })(jQuery);
