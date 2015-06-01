@@ -1,6 +1,6 @@
 {
   "name": "jquery.viewport",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Add viewport selectors to jQuery. For example $(\"img:below-the-fold\").something().",
   "main": "jquery.viewport.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mtr/jquery_viewport.git"
+    "url": "https://github.com/1337/jquery_viewport.git"
   },
   "keywords": [
     "jquery",
@@ -22,7 +22,7 @@
   "author": "Mika Tuupola",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mtr/jquery_viewport/issues"
+    "url": "https://github.com/1337/jquery_viewport/issues"
   },
-  "homepage": "https://github.com/mtr/jquery_viewport"
+  "homepage": "https://github.com/1337/jquery_viewport"
 }
