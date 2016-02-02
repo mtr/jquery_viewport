@@ -1,6 +1,9 @@
 jquery_viewport
 ===============
 
+[ ![Codeship Status for 1337/jquery_viewport](https://codeship.com/projects/7189b9e0-ac0d-0133-5080-02e6183d343a/status?branch=master)](https://codeship.com/projects/131549)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/9a3e4b29ae47419098f08359acf57b03)](https://www.codacy.com/app/0/jquery_viewport)
+
 Check if an element is entirely in the viewport, partially in the viewport, 
 entirely out of the viewport; if is above, below, left, or right of the 
 viewport; or if top, bottom, left or right intersects the viewport.
