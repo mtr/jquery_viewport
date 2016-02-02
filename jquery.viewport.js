@@ -10,7 +10,15 @@
  *  http://www.appelsiini.net/projects/viewport
  *
  */
-(function ($) {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('jquery'));
+    } else {
+        factory(root.jQuery);
+    }
+}(this, function ($) {
     "use strict";
 
     var belowTheFold = function (element, settings) {
@@ -133,4 +141,4 @@
             return inViewportCompletely(a, {threshold: parseInt(m[3]) || 0});
         }
     });
-})(jQuery);
+}));
