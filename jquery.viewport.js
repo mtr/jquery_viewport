@@ -114,7 +114,7 @@
         return true;
     }
 
-    $.extend($.expr[':'], {
+    $.extend($.expr.pseudos, {
         "below-the-fold": function (a, i, m) {
             // m[3] is supposedly the threshold (@theluk)
             return belowTheFold(a, {threshold: int(m[3])});
